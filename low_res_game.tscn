@@ -1,0 +1,59 @@
+[gd_scene format=4 uid="uid://dgg04ip06pl6a"]
+
+[ext_resource type="PackedScene" uid="uid://dldhaksev2q35" path="res://player.tscn" id="1_n57yq"]
+[ext_resource type="Texture2D" uid="uid://c5rgy4x5lcead" path="res://assets/construction_block_sheet.png" id="2_dkf18"]
+[ext_resource type="Script" uid="uid://dr5gf33ivd5u3" path="res://rotating_object.gd" id="3_w67f0"]
+[ext_resource type="Texture2D" uid="uid://xtudtybt48o2" path="res://assets/byson npc.png" id="4_ix06g"]
+[ext_resource type="Script" uid="uid://cfj6x57qoqt86" path="res://low_res_camera.gd" id="5_ix06g"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_n57yq"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mwjv2"]
+texture = ExtResource("2_dkf18")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_w67f0"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_mwjv2")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wqsno"]
+
+[node name="LowResGame" type="Node2D" unique_id=1180420119]
+
+[node name="CharacterBody2D" parent="." unique_id=1447327300 instance=ExtResource("1_n57yq")]
+position = Vector2(0, 105)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=418090831]
+z_index = 1
+position = Vector2(0, 146.5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=133628816]
+position = Vector2(0, -17)
+shape = SubResource("WorldBoundaryShape2D_n57yq")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=97237207]
+tile_map_data = PackedByteArray("AAD7/wQAAAAAAAAAAAD8/wQAAAAAAAAAAAD9/wQAAAAAAAAAAAD+/wQAAAAAAAAAAAD//wQAAAAAAAAAAAAAAAQAAAAAAAAAAAABAAQAAAAAAAAAAAACAAQAAAAAAAAAAAADAAQAAAAAAAAAAAAEAAQAAAAAAAAAAAAFAAQAAAAAAAAAAAAGAAQAAAAAAAAAAAD5/wQAAAAAAAAAAAD6/wQAAAAAAAAAAAAHAAQAAAAAAAAAAAD4/wQAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_w67f0")
+
+[node name="RotatingObject" type="StaticBody2D" parent="." unique_id=980482735]
+position = Vector2(124, 53)
+script = ExtResource("3_w67f0")
+
+[node name="Sprite2D" type="Sprite2D" parent="RotatingObject" unique_id=628570853]
+texture = ExtResource("4_ix06g")
+offset = Vector2(-3, -7)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RotatingObject" unique_id=759515133]
+shape = SubResource("CircleShape2D_wqsno")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=569214213 node_paths=PackedStringArray("local_target")]
+script = ExtResource("5_ix06g")
+local_target = NodePath("../CharacterBody2D")

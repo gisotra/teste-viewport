@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://b7fc4hsnuu0km"]
+
+[ext_resource type="PackedScene" uid="uid://dgg04ip06pl6a" path="res://low_res_game.tscn" id="1_pq8q7"]
+[ext_resource type="Script" uid="uid://bjks5d4uo6bsv" path="res://high_res_camera.gd" id="2_pyidc"]
+
+[node name="Root" type="Node2D" unique_id=848498094]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=355922104]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1571865010]
+disable_3d = true
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+audio_listener_enable_2d = true
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="LowResGame" parent="SubViewportContainer/SubViewport" unique_id=1180420119 instance=ExtResource("1_pq8q7")]
+
+[node name="HighResCamera" type="Camera2D" parent="." unique_id=1020601767 node_paths=PackedStringArray("player", "sub_viewport_container")]
+zoom = Vector2(6, 6)
+limit_enabled = false
+position_smoothing_enabled = true
+script = ExtResource("2_pyidc")
+player = NodePath("../SubViewportContainer/SubViewport/LowResGame/CharacterBody2D")
+sub_viewport_container = NodePath("../SubViewportContainer")
+
+[editable path="SubViewportContainer/SubViewport/LowResGame"]
